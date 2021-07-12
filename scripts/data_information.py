@@ -73,8 +73,13 @@ class DataInfo:
 
     def get_columns_with_missing_values(self):
         lst = self.df.isnull().any()
-        # print(f"Columns with missing values are:\n{lst}")
-        return lst.index
+        arr = []
+        index = 0
+        for col in lst:
+            if col == True:
+                arr.append(lst.index[index])
+            index += 1
+        return arr
 
     def get_column_based_missing_values(self):
         value = self.df.isnull().sum()

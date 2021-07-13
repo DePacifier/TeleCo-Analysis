@@ -9,6 +9,11 @@ class DataCleaner:
         self.df.drop(columns, axis=1, inplace=True)
         return self.df
 
+    def remove_single_value_columns(self, unique_value_counts: pd.DataFrame) -> pd.DataFrame:
+        drop_cols = list(
+            unique_value_counts.loc[unique_value_counts['Unique Value Count'] == 1].index)
+        return self.df.drop(drop_cols, axis=1, inplace=True)
+
     def remove_duplicates(self) -> pd.DataFrame:
         removables = self.df[self.df.duplicated()].index
         return self.df.drop(index=removables, inplace=True)

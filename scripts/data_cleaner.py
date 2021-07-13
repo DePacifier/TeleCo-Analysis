@@ -26,11 +26,7 @@ class DataCleaner:
 
         return self.df
 
-    def fill_non_numeric_values(self, missing_cols: list, replaceValues: list, ffill: bool = True, bfill: bool = False) -> pd.DataFrame:
-        for cols in missing_cols:
-            for value in replaceValues:
-                self.df[self.df[cols] == value] = None
-
+    def fill_non_numeric_values(self, missing_cols: list, ffill: bool = True, bfill: bool = False) -> pd.DataFrame:
         if(ffill == True and bfill == True):
             self.df[missing_cols].fillna(method='ffill', inplace=True)
             self.df[missing_cols].fillna(method='bfill', inplace=True)

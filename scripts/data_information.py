@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 class DataInfo:
@@ -83,10 +84,13 @@ class DataInfo:
 
     def get_column_based_missing_values(self):
         value = self.df.isnull().sum()
-        return value
+        df = pd.DataFrame(value, columns=['missing_count'])
+        df.drop(df[df['missing_count'] == 0].index, inplace=True)
+        df['type'] = [self.df.dtypes.loc[i] for i in df.index]
+        return df
 
     def get_column_based_missing_percentage(self):
-        col_null = self.get_column_based_missing_values()
+        col_null = self.df.isnull().sum()
         total_entries = self.df.shape[0]
         missing_percentage = []
         for col_missing_entries in col_null:
@@ -102,6 +106,9 @@ class DataInfo:
         all_cols = self.get_column_based_missing_percentage()
         extracted = all_cols['missing_percentage'].str.extract(r'(.+)%')
         return extracted[extracted[0].apply(lambda x: float(x) >= num)].index
+
+    def get_duplicates(self):
+        return self.df[self.df.duplicated()]
 
     def get_total_memory_usage(self):
         value = self.df.memory_usage(deep=True).sum()
@@ -126,3 +133,28 @@ class DataInfo:
             return self.df.groupby(column_name)
         except:
             print("Failed to get grouping column")
+
+    def get_col_unique_value_count(self, col):
+        try:
+            print(
+                f'Number of unique values in column {col} is: {str(len(self.df[col].unique()))}')
+        except:
+            print('Failed to get unique values')
+
+    def get_dataframe_columns_unique_value_count(self):
+        return pd.DataFrame(self.df.apply(lambda x: len(x.value_counts(dropna=False)), axis=0), columns=['Unique Value Count']).sort_values(by='Unique Value Count', ascending=True)
+
+    def get_min_max_of_column(self, col, range=1):
+        sortedVal = np.sort(self.df[col].unique())
+        top_df = pd.DataFrame(sortedVal[::-1][:range], columns=['Max Value/s'])
+        bottom_df = pd.DataFrame(sortedVal[:range], columns=['Min Value/s'])
+        info_df = pd.concat([top_df, bottom_df], axis=1)
+        return info_df
+
+    def get_min_max_of_dataframe_columns(self):
+        top = self.df.max()
+        top_df = pd.DataFrame(top, columns=['Max Value'])
+        bottom = self.df.min()
+        bottom_df = pd.DataFrame(bottom, columns=['Min Value'])
+        info_df = pd.concat([top_df, bottom_df], axis=1)
+        return info_df

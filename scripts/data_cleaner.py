@@ -116,3 +116,41 @@ class DataCleaner:
             print('failed to change values to megabytes')
 
         return self.df
+
+    def standardized_column(self, columns: list, new_name: list, func) -> pd.DataFrame:
+        try:
+            assert(len(columns) == len(new_name))
+            for index, col in enumerate(columns):
+                self.df[col] = func(self.df[col])
+                self.df.rename(columns={col: new_name[index]}, inplace=True)
+
+        except AssertionError:
+            print('size of columns and names provided is not equal')
+
+        except:
+            print('standardization failed')
+
+        return self.df
+
+    def optimize_df(self) -> pd.DataFrame:
+        data_types = self.df.dtypes
+        optimizable = ['float64', 'int64']
+        for col in data_types.index:
+            if(data_types[col] in optimizable):
+                if(data_types[col] == 'float64'):
+                    # downcasting a float column
+                    self.df[col] = pd.to_numeric(
+                        self.df[col], downcast='float')
+                elif(data_types[col] == 'int64'):
+                    # downcasting an integer column
+                    self.df[col] = pd.to_numeric(
+                        self.df[col], downcast='unsigned')
+
+        return self.df.info()
+
+    def save_clean_data(self, name: str):
+        try:
+            self.df.to_csv(name)
+
+        except:
+            print("Failed to save data")

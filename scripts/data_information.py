@@ -50,11 +50,21 @@ class DataInfo:
         return value
 
     def get_description(self):
-        print("DataFrame Description: ")
         return self.df.describe()
 
+    def get_dispersion_params(self):
+        return self.df.describe().append(self.get_mode()).append(self.get_median())
+
     def get_mode(self):
-        return self.df.mode(axis=1)
+        mode = self.df.mode()
+        actual_mode = mode.iloc[0, :]
+        actual_mode.name = 'Mode'
+        return actual_mode
+
+    def get_median(self):
+        median = self.df.median()
+        median.name = 'Median'
+        return median
 
     def get_column_description(self, column_name: str):
         try:

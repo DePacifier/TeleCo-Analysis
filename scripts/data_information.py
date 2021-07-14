@@ -52,8 +52,11 @@ class DataInfo:
     def get_description(self):
         return self.df.describe()
 
-    def get_dispersion_params(self):
-        return self.df.describe().append(self.get_mode()).append(self.get_median())
+    def get_dispersion_params(self) -> pd.DataFrame:
+        return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)
+
+    def get_column_dispersion_params(self, col: str) -> pd.DataFrame:
+        return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)[col]
 
     def get_mode(self):
         mode = self.df.mode()
@@ -184,3 +187,23 @@ class DataInfo:
         bottom_df = pd.DataFrame(bottom, columns=['Min Value'])
         info_df = pd.concat([top_df, bottom_df], axis=1)
         return info_df
+
+    def create_decile(self, column: str, reverse: bool = True) -> pd.DataFrame:
+        if(reverse == True):
+            self.df['decile'] = pd.qcut(
+                self.df[column], 10, labels=np.arange(10, 0, -1))
+        else:
+            self.df['decile'] = pd.qcut(
+                self.df[column], 10, labels=False)
+
+        return self.df
+
+    def create_quantile(self, column: str, reverse: bool = True) -> pd.DataFrame:
+        if(reverse == True):
+            self.df['quantile'] = pd.qcut(
+                self.df[column], 5, labels=np.arange(5, 0, -1))
+        else:
+            self.df['quantile'] = pd.qcut(
+                self.df[column], 5, labels=False)
+
+        return self.df

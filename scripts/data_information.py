@@ -53,6 +53,9 @@ class DataInfo:
         print("DataFrame Description: ")
         return self.df.describe()
 
+    def get_mode(self):
+        return self.df.mode(axis=1)
+
     def get_column_description(self, column_name: str):
         try:
             return self.df[column_name].describe()

@@ -7,6 +7,19 @@ class DataInfo:
         self.df = df
 
     def get_basic_description(self):
+        """
+        This function takes the dataframe and the column which has the bytes values
+        returns the megabytesof that value
+
+        Args:
+        -----
+        df: dataframe
+        bytes_data: column with bytes values
+
+        Returns:
+        --------
+        A series
+        """
         self.get_size()
         self.get_total_memory_usage()
         self.get_memory_usage()

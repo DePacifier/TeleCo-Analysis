@@ -6,7 +6,42 @@ class DataCleaner:
         self.df = df
 
     def remove_unwanted_columns(self, columns: list) -> pd.DataFrame:
+        """
+        This function takes the dataframe and the column which has the bytes values
+        returns the megabytesof that value
+
+        Args:
+        -----
+        df: dataframe
+        bytes_data: column with bytes values
+
+        Returns:
+        --------
+        A series
+        """
         self.df.drop(columns, axis=1, inplace=True)
+        return self.df
+
+    def separate_date_time_column(self, column: str, col_prefix_name: str) -> pd.DataFrame:
+        try:
+
+            self.df[f'{col_prefix_name}_date'] = pd.to_datetime(
+                self.df[column]).dt.date
+            self.df[f'{col_prefix_name}_time'] = pd.to_datetime(
+                self.df[column]).dt.time
+
+            return self.df
+
+        except:
+            print("Failed to separate the date-time column")
+
+    def change_columns_type_to(self, cols: list, data_type: str) -> pd.DataFrame:
+        try:
+            for col in cols:
+                self.df[col] = self.df[col].astype(data_type)
+        except:
+            print('Failed to change columns type')
+
         return self.df
 
     def remove_single_value_columns(self, unique_value_counts: pd.DataFrame) -> pd.DataFrame:
@@ -45,5 +80,39 @@ class DataCleaner:
         else:
             self.df[missing_cols].fillna(method='bfill', inplace=True)
             self.df[missing_cols].fillna(method='ffill', inplace=True)
+
+        return self.df
+
+    def create_new_columns_from(self, new_col_name: str, col1: str, col2: str, func) -> pd.DataFrame:
+        try:
+            self.df[new_col_name] = func(self.df[col1], self.df[col2])
+        except:
+            print("failed to create new column with the specified function")
+
+        return self.df
+
+    def convert_bytes_to_megabytes(self, columns: list) -> pd.DataFrame:
+        """
+            This function takes the dataframe and the column which has the bytes values
+            returns the megabytesof that value
+
+            Args:
+            -----
+            df: dataframe
+            bytes_data: column with bytes values
+
+            Returns:
+            --------
+            A series
+        """
+        try:
+            megabyte = 1*10e+5
+            for col in columns:
+                self.df[col] = self.df[col] / megabyte
+                self.df.rename(
+                    columns={col: f'{col[:-7]}(MegaBytes)'}, inplace=True)
+
+        except:
+            print('failed to change values to megabytes')
 
         return self.df

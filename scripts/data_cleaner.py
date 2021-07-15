@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 class DataCleaner:
@@ -116,6 +117,12 @@ class DataCleaner:
             print('failed to change values to megabytes')
 
         return self.df
+
+    def fix_outlier(self, column: str):
+        self.df[column] = np.where(self.df[column] > self.df[column].quantile(
+            0.95), self.df[column].median(), self.df[column])
+
+        return self.df[column]
 
     def standardized_column(self, columns: list, new_name: list, func) -> pd.DataFrame:
         try:

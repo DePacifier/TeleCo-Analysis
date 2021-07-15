@@ -55,8 +55,16 @@ class DataInfo:
     def get_dispersion_params(self) -> pd.DataFrame:
         return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)
 
+    def get_column_dispersion_with_total_params(self) -> pd.DataFrame:
+        return self.df.describe().append(self.get_mode()).append(self.get_median()).append(self.get_total()).dropna(1)
+
     def get_column_dispersion_params(self, col: str) -> pd.DataFrame:
         return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)[col]
+
+    def get_total(self):
+        total = self.df.sum()
+        total.name = 'Total'
+        return total
 
     def get_mode(self):
         mode = self.df.mode()

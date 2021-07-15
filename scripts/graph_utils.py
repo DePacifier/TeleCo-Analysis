@@ -37,8 +37,10 @@ def plot_heatmap(df: pd.DataFrame, title: str, cbar=False) -> None:
     plt.show()
 
 
-def plot_heatmap_from_correlation(correlation):
+def plot_heatmap_from_correlation(correlation, title: str):
+    plt.figure(figsize=(20, 14))
     sns.heatmap(correlation)
+    plt.title(title, size=18, fontweight='bold')
     plt.show()
 
 
@@ -62,6 +64,15 @@ def plot_box_multi(df: pd.DataFrame, x_col: str, y_col: str, title: str) -> None
 def plot_scatter(df: pd.DataFrame, x_col: str, y_col: str, title: str, hue: str, style: str) -> None:
     plt.figure(figsize=(12, 7))
     sns.scatterplot(data=df, x=x_col, y=y_col, hue=hue, style=style)
+    plt.title(title, size=20)
+    plt.xticks(fontsize=14)
+    plt.yticks(fontsize=14)
+    plt.show()
+
+
+def simple_plot_scatter(df: pd.DataFrame, x_col: str, y_col: str, title: str) -> None:
+    plt.figure(figsize=(12, 7))
+    sns.scatterplot(data=df, x=x_col, y=y_col)
     plt.title(title, size=20)
     plt.xticks(fontsize=14)
     plt.yticks(fontsize=14)

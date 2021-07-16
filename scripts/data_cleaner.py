@@ -68,19 +68,20 @@ class DataCleaner:
         return self.df
 
     def fill_non_numeric_values(self, missing_cols: list, ffill: bool = True, bfill: bool = False) -> pd.DataFrame:
-        if(ffill == True and bfill == True):
-            self.df[missing_cols].fillna(method='ffill', inplace=True)
-            self.df[missing_cols].fillna(method='bfill', inplace=True)
+        for col in missing_cols:
+            if(ffill == True and bfill == True):
+                self.df[col].fillna(method='ffill', inplace=True)
+                self.df[col].fillna(method='bfill', inplace=True)
 
-        elif(ffill == True and bfill == False):
-            self.df[missing_cols].fillna(method='ffill', inplace=True)
+            elif(ffill == True and bfill == False):
+                self.df[col].fillna(method='ffill', inplace=True)
 
-        elif(ffill == False and bfill == True):
-            self.df[missing_cols].fillna(method='bfill', inplace=True)
+            elif(ffill == False and bfill == True):
+                self.df[col].fillna(method='bfill', inplace=True)
 
-        else:
-            self.df[missing_cols].fillna(method='bfill', inplace=True)
-            self.df[missing_cols].fillna(method='ffill', inplace=True)
+            else:
+                self.df[col].fillna(method='bfill', inplace=True)
+                self.df[col].fillna(method='ffill', inplace=True)
 
         return self.df
 
@@ -122,7 +123,17 @@ class DataCleaner:
         self.df[column] = np.where(self.df[column] > self.df[column].quantile(
             0.95), self.df[column].median(), self.df[column])
 
-        return self.df[column]
+        return self.df
+
+    def fix_outlier_columns(self, columns: list):
+        try:
+            for column in columns:
+                self.df[column] = np.where(self.df[column] > self.df[column].quantile(
+                    0.95), self.df[column].median(), self.df[column])
+        except:
+            print("Cant fix outliers for each column")
+
+        return self.df
 
     def standardized_column(self, columns: list, new_name: list, func) -> pd.DataFrame:
         try:

@@ -12,7 +12,7 @@ jobs:
       - name: cml_run
         run: |
           pip install -r requirements.txt
-          python overview_to_satisfaction.py
+          python scripts.overview_to_satisfaction.py
 
       - name: run-tests
         run: |

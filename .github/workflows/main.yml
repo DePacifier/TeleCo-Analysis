@@ -1,21 +1,19 @@
 name: Python-Package-Structure
-on: 
+on:
   push:
     branches:
-    - main
+      - main
 jobs:
   run:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     container: docker://dvcorg/cml-py3:latest
     steps:
-    - uses: actions/checkout@v2
-    - name: cml_run
-      run: | 
-        pip install -r requirements.txt
-        python scripts/script.py
+      - uses: actions/checkout@v2
+      - name: cml_run
+        run: |
+          pip install -r requirements.txt
+          python overview_to_satisfaction.py
 
-    - name: run-tests
-      run: |
-        python -m unittest tests.test_script
-
-        
+      - name: run-tests
+        run: |
+          python -m unittest tests.test_results_pickler

@@ -156,15 +156,12 @@ cleaner.df.drop([cleaner.df.index[-1]], inplace=True)
 # reinstantiate DataInfo from the cleaners dataframe
 explorer = DataInfo(cleaner.df)
 
-explorer.get_column_based_missing_values()
-
 # Check if skew for numeric missing values and if not fill missing values with mean value but if skew use median
 
 # calling method that fills numeric values with median or mean based on skeewness
 cleaner.fill_numeric_values(explorer.get_columns_with_missing_values())
 
 explorer = DataInfo(cleaner.df)
-explorer.get_columns_with_missing_values()
 
 
 # using method to forward fill and bfill the remaining non-numeric values
@@ -390,9 +387,9 @@ kmeans = KMeans(init="random", n_clusters=kl.elbow,
                 n_init=10, max_iter=300, random_state=42)
 label = kmeans.fit_predict(standardized_df)
 centroids = kmeans.cluster_centers_
-print(f'# Centroids of the clustering:\n{centroids}')
-print(f'# The number of iterations required to converge: {kmeans.inertia_}')
-print(f'# The number of iterations required to converge: {kmeans.n_iter_}')
+# print(f'# Centroids of the clustering:\n{centroids}')
+# print(f'# The number of iterations required to converge: {kmeans.inertia_}')
+# print(f'# The number of iterations required to converge: {kmeans.n_iter_}')
 # Getting index based on clusters
 u_labels = np.unique(label)
 
@@ -455,8 +452,6 @@ rn_df = clean_df.loc[:, ['MSISDN/Number', 'Handset Type']]
 rn_df = rn_df.groupby('MSISDN/Number')
 working_df['Handset Type'] = rn_df.first(
 ).loc[working_df.index.to_list(), ['Handset Type']]
-working_df
-
 
 explorer = DataInfo(working_df)
 most_occuring_values = explorer.get_mode()
@@ -533,9 +528,9 @@ kl = KneeLocator(range(1, 20), sse, curve="convex", direction="decreasing")
 km = KMeans(init="random", n_clusters=kl.elbow, n_init=10)
 label = km.fit_predict(std_df)
 centroids = km.cluster_centers_
-print(f'# Centroids of the clustering:\n{centroids}')
-print(f'# The number of iterations required to converge: {km.inertia_}')
-print(f'# The number of iterations required to converge: {km.n_iter_}')
+# print(f'# Centroids of the clustering:\n{centroids}')
+# print(f'# The number of iterations required to converge: {km.inertia_}')
+# print(f'# The number of iterations required to converge: {km.n_iter_}')
 
 # Getting index based on clusters
 u_labels = np.unique(label)
@@ -594,7 +589,6 @@ rn_df = clean_df.loc[:, ['MSISDN/Number', 'Handset Type']]
 rn_df = rn_df.groupby('MSISDN/Number')
 working_df['Handset Type'] = rn_df.first(
 ).loc[working_df.index.to_list(), ['Handset Type']]
-working_df
 
 explorer = DataInfo(working_df)
 most_occuring_values = explorer.get_mode()
@@ -669,9 +663,9 @@ kl = KneeLocator(range(1, 20), sse, curve="convex", direction="decreasing")
 km = KMeans(init="random", n_clusters=kl.elbow, n_init=10)
 label = km.fit_predict(std_df)
 centroids = km.cluster_centers_
-print(f'# Centroids of the clustering:\n{centroids}')
-print(f'# The number of iterations required to converge: {km.inertia_}')
-print(f'# The number of iterations required to converge: {km.n_iter_}')
+# print(f'# Centroids of the clustering:\n{centroids}')
+# print(f'# The number of iterations required to converge: {km.inertia_}')
+# print(f'# The number of iterations required to converge: {km.n_iter_}')
 
 # Getting index based on clusters
 u_labels = np.unique(label)

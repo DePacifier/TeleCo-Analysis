@@ -19,7 +19,7 @@ jobs:
           pip install -r requirements.txt
       - name: run_analysis
         run: |
-          python scripts.overview_to_satisfaction.py
+          python ./scripts/overview_to_satisfaction.py
 
       - name: run-tests
         run: |

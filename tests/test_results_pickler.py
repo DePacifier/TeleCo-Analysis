@@ -31,8 +31,12 @@ class TestCases(unittest.TestCase):
         Provide an assertion level for arg input
         """
         data = [1, 2, 3]
+        save = ResultPickler()
+        save.add_data('new_value', data)
+        save.save_data('test.pickle')
         pickler = ResultPickler()
         pickler.load_data('test.pickle')
+        os.remove('test.pickle')
         result = pickler.data['new_value']
         self.assertEqual(result, data)
 

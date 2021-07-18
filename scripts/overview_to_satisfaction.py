@@ -18,11 +18,11 @@ from data_loader import load_df_from_csv, load_df_from_excel
 results = ResultPickler()
 
 
-fields_description = load_df_from_csv("../data/fields_description.csv")
+fields_description = load_df_from_csv("./data/fields_description.csv")
 
 
 telData = load_df_from_excel(
-    "../data/teleCo_data.xlsx", na_values=['undefined'])
+    "./data/teleCo_data.xlsx", na_values=['undefined'])
 
 hand_set = telData['Handset Type'].value_counts()[:10]
 # Saving the data
@@ -250,10 +250,10 @@ cleaner.standardized_column(['Start ms', 'End ms', 'Activity Duration DL (ms)', 
 cleaner.optimize_df()
 
 # save the final cleaned data
-cleaner.save_clean_data('../data/teleCo_clean_data.csv')
+cleaner.save_clean_data('/teleCo_clean_data.csv')
 
 # saving our results to a pickle file
-results.save_data('../data/overview_results.pickle')
+results.save_data('./data/overview_results.pickle')
 
 ############################# End of Overview ############################
 ############################# start of Engagement #########################
@@ -263,7 +263,7 @@ results = ResultPickler()
 
 
 # Fetching and selecting the specified metric columns only
-clean_data = load_df_from_csv("../data/teleCo_clean_data.csv")
+clean_data = load_df_from_csv("./data/teleCo_clean_data.csv")
 cleaner = DataCleaner(clean_data)
 cleaner.remove_unwanted_columns(cleaner.df.columns[0])
 clean_df = cleaner.df
@@ -407,22 +407,22 @@ for i in u_labels:
 ax.scatter(centroids[:, 0], centroids[:, 1],
            centroids[:, 2], marker='x', color='black')
 ax.legend()
-fig.savefig('../data/engagement_cluster.png')
+fig.savefig('./data/engagement_cluster.png')
 
 
 standardized_df['cluster'] = label
 cleaner = DataCleaner(standardized_df)
-cleaner.save_clean_data('../data/engagement_cluster.csv')
+cleaner.save_clean_data('./data/engagement_cluster.csv')
 
 
 centroids_df = pd.DataFrame(centroids, columns=[
                             'Bearer Id', 'Total Duration (hr)', 'Total Data (MegaBytes)'])
 cleaner = DataCleaner(centroids_df)
-cleaner.save_clean_data('../data/engagement_centroid.csv')
+cleaner.save_clean_data('./data/engagement_centroid.csv')
 
 
 # saving our results to a pickle file
-results.save_data('../data/engagement_results.pickle')
+results.save_data('./data/engagement_results.pickle')
 
 
 ####################################End of engagement######################
@@ -431,7 +431,7 @@ results.save_data('../data/engagement_results.pickle')
 results = ResultPickler()
 
 # Fetching and selecting the specified metric columns only
-clean_data = load_df_from_csv("../data/teleCo_clean_data.csv")
+clean_data = load_df_from_csv("./data/teleCo_clean_data.csv")
 cleaner = DataCleaner(clean_data)
 cleaner.remove_unwanted_columns(cleaner.df.columns[0])
 clean_df = cleaner.df
@@ -549,18 +549,18 @@ for i in u_labels:
 ax.scatter(centroids[:, 0], centroids[:, 1],
            centroids[:, 2], marker='x', color='black')
 ax.legend()
-fig.savefig('../data/experience_cluster.png')
+fig.savefig('./data/experience_cluster.png')
 
 std_df['cluster'] = label
 cleaner = DataCleaner(std_df)
-cleaner.save_clean_data('../data/experience_cluster.csv')
+cleaner.save_clean_data('./data/experience_cluster.csv')
 
 centroids_df = pd.DataFrame(centroids, columns=[
                             'TCP retransmission (Bytes)', 'Avg Delay (ms)', 'Avg Throughput (kbps)'])
 cleaner = DataCleaner(centroids_df)
-cleaner.save_clean_data('../data/experience_centroid.csv')
+cleaner.save_clean_data('./data/experience_centroid.csv')
 
-results.save_data('../data/experience_results.pickle')
+results.save_data('./data/experience_results.pickle')
 
 #############################End of experience#################
 #############################Start of satisfaction##############
@@ -568,7 +568,7 @@ results.save_data('../data/experience_results.pickle')
 results = ResultPickler()
 
 # Fetching and selecting the specified metric columns only
-clean_data = load_df_from_csv("../data/teleCo_clean_data.csv")
+clean_data = load_df_from_csv("./data/teleCo_clean_data.csv")
 cleaner = DataCleaner(clean_data)
 cleaner.remove_unwanted_columns(cleaner.df.columns[0])
 clean_df = cleaner.df
@@ -684,15 +684,15 @@ for i in u_labels:
 ax.scatter(centroids[:, 0], centroids[:, 1],
            centroids[:, 2], marker='x', color='black')
 ax.legend()
-fig.savefig('../data/experience_cluster.png')
+fig.savefig('./data/experience_cluster.png')
 
 std_df['cluster'] = label
 cleaner = DataCleaner(std_df)
-cleaner.save_clean_data('../data/experience_cluster.csv')
+cleaner.save_clean_data('./data/experience_cluster.csv')
 
 centroids_df = pd.DataFrame(centroids, columns=[
                             'TCP retransmission (Bytes)', 'Avg Delay (ms)', 'Avg Throughput (kbps)'])
 cleaner = DataCleaner(centroids_df)
-cleaner.save_clean_data('../data/experience_centroid.csv')
+cleaner.save_clean_data('./data/experience_centroid.csv')
 
-results.save_data('../data/experience_results.pickle')
+results.save_data('./data/experience_results.pickle')

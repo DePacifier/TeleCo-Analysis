@@ -1,9 +1,9 @@
-from scripts.results_pickler import ResultPickler
 import unittest
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join('..')))
 
+from scripts.results_pickler import ResultPickler
 
 class TestCases(unittest.TestCase):
     def test_add_data(self):
@@ -23,7 +23,8 @@ class TestCases(unittest.TestCase):
         data = [1, 2, 3]
         pickler = ResultPickler()
         pickler.add_data('new_value', data)
-        self.assertRaises(None, pickler.save_data('test.pickle'))
+        pickler.save_data('test.pickle')
+        self.assertTrue('test.pickle' in  os.listdir())
 
     def test_load_data(self):
         """
@@ -32,7 +33,7 @@ class TestCases(unittest.TestCase):
         data = [1, 2, 3]
         pickler = ResultPickler()
         pickler.load_data('test.pickle')
-        result = pickler.get_data()['new_value']
+        result = pickler.data['new_value']
         self.assertEqual(result, data)
 
     def test_get_data(self):
@@ -42,8 +43,8 @@ class TestCases(unittest.TestCase):
         data = [1, 2, 3]
         pickler = ResultPickler()
         pickler.add_data('new_value', data)
-        result = pickler.get_data()['new_value']
-        self.assertEqual(result, data)
+        result = pickler.get_data()
+        self.assertEqual(pickler.data, result)
 
 
 if __name__ == '__main__':

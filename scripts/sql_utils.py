@@ -26,7 +26,28 @@ additional_data = {
 }
 
 
-def create_schema(table_name: str, data: dict, primary_key: str, foreign_key: str = '', additional_data: dict = {}):
+def create_schema(table_name: str, data: dict, primary_key: str, foreign_key: str = '', additional_data: dict = {}) -> str:
+    """
+        A simple function which tries to create a schema for a sql table
+        Parameters
+        ----------
+        table_name:
+            Type: str
+        data:
+            Type: dict
+        primary_key:
+            Type: str
+        foreign_key:
+            Type: str
+            Default value = ''
+        additional_data:
+            Type: dict
+            Default value = {}
+
+        Returns
+        -------
+        str
+    """
     schema = f"CREATE TABLE IF NOT EXISTS `{table_name}` ("
 
     for key, value in data.items():
@@ -46,12 +67,48 @@ def create_schema(table_name: str, data: dict, primary_key: str, foreign_key: st
 
 
 def save_schema(name: str, schema: str):
+    """
+        A simple function which saves a string on a file returning positive number if it is successful
+        Parameters
+        ----------
+        name:
+            Type: str
+        schema:
+            Type: str
+
+        Returns
+        -------
+        int
+    """
     with open(name, 'w') as schema_file:
         success = schema_file.write(schema)
     return success
 
 
 def create_and_save_schema(file_name: str, table_name: str, data: dict, primary_key: str, foreign_key: str = '', additional_data: dict = {}):
+    """
+        A function which combies the create and save schema functions together
+        Parameters
+        ----------
+        file_name:
+            Type: str
+        table_name:
+            Type: str
+        data:
+            Type: dict
+        primary_key:
+            Type: str
+        foreign_key:
+            Type: str
+            Default value = ''
+        additional_data:
+            Type: dict
+            Default value = {}
+
+        Returns
+        -------
+        int
+    """
     schema = create_schema(table_name, data,
                            primary_key, foreign_key, additional_data)
     success = save_schema(file_name, schema)
@@ -61,7 +118,7 @@ def create_and_save_schema(file_name: str, table_name: str, data: dict, primary_
 
 def DBConnect(dbName=None):
     """
-
+    A simple function which connects to the local database reutrning the connection and cursor of the database
     Parameters
     ----------
     dbName :
@@ -69,7 +126,7 @@ def DBConnect(dbName=None):
 
     Returns
     -------
-
+    tuple
     """
     conn = mysql.connect(host='localhost', user='root', password='',
                          database=dbName, buffered=True)
@@ -279,30 +336,12 @@ def db_execute_fetch(*args, many=False, tablename='', rdf=True, **kwargs) -> pd.
         return res
 
 
-# if __name__ == "__main__":
-#     createDB(dbName='tweets')
-#     emojiDB(dbName='tweets')
-#     createTables(dbName='tweets')
-
-#     processed_tweet_df = pd.read_csv('../data/processed_tweet_data.csv')
-#     model_ready_tweet_df = pd.read_csv('../data/model_ready_data.csv')
-
-#     processed_tweet_df['clean_text'] = model_ready_tweet_df['clean_text']
-#     processed_tweet_df['hashtags'] = processed_tweet_df['hashtags'].dropna("")
-#     processed_tweet_df['hashtags'] = processed_tweet_df['hashtags'].astype(str)
-#     processed_tweet_df['hashtags'] = processed_tweet_df['hashtags'].apply(
-#         lambda x: x.lower())
-
-#     insert_to_tweet_table(dbName='tweets', df=processed_tweet_df,
-#                           table_name='TweetInformation')
-
-
 if __name__ == '__main__':
-    # print(create_and_save_schema('../data/schema.sql', "TweetInformation", data,
-    #                              'id', additional_data=additional_data))
+    print(create_and_save_schema('../data/schema.sql', "TweetInformation", data,
+                                 'id', additional_data=additional_data))
     # createDB(dbName='test')
     # alter_DB(dbName='test')
     # createTable(dbName='test', table_schema='../data/schema.sql')
     # insert_to_table(dbName='tweets', df=processed_tweet_df,
     #                 table_name='TweetInformation')
-    print(get_table_columns(table_schema='../data/schema.sql'))
+    # print(get_table_columns(table_schema='../data/schema.sql'))

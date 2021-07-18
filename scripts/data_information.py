@@ -4,21 +4,29 @@ import numpy as np
 
 class DataInfo:
     def __init__(self, df: pd.DataFrame):
+        """
+            Returns a DataInfo Object with the passed DataFrame Data set as its own DataFrame
+            Parameters
+            ----------
+            df:
+                Type: pd.DataFrame
+
+            Returns
+            -------
+            None
+        """
         self.df = df
 
     def get_basic_description(self):
         """
-        This function takes the dataframe and the column which has the bytes values
-        returns the megabytesof that value
+            Runs get_size, get_total_memory_usage, get_memory_usage and get_information
+            Parameters
+            ----------
+            None
 
-        Args:
-        -----
-        df: dataframe
-        bytes_data: column with bytes values
-
-        Returns:
-        --------
-        A series
+            Returns
+            -------
+            None
         """
         self.get_size()
         self.get_total_memory_usage()
@@ -26,76 +34,250 @@ class DataInfo:
         self.get_information()
 
     def get_missing_description(self):
+        """
+            Runs get_total_missing_values, get_columns_with_missing_values and get_column_based_missing_values
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         self.get_total_missing_values()
         self.get_columns_with_missing_values()
         self.get_column_based_missing_values()
 
     def get_columns(self):
+        """
+            prints and returns columns of the objects dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         print("Columns Listed in the DataFrame are: ")
         return self.df.columns.tolist()
 
     def get_information(self):
+        """
+            prints and returns the info of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         print("DataFrame Information: ")
         return self.df.info()
 
     def get_size(self):
+        """
+            prints and returns the size of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         value = self.df.shape
         print(
             f"The DataFrame containes {value[0]} rows and {value[1]} columns.")
         return value
 
     def get_total_entries(self):
+        """
+            prints and returns the total entries of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         value = self.df.size
         print(f"The DataFrame containes {value} entries.")
         return value
 
     def get_description(self):
+        """
+            returns the description of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         return self.df.describe()
 
     def get_dispersion_params(self) -> pd.DataFrame:
+        """
+            returns the description plus mode and median of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)
 
     def get_column_dispersion_with_total_params(self) -> pd.DataFrame:
+        """
+            returns the description plus mode, median and total of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         return self.df.describe().append(self.get_mode()).append(self.get_median()).append(self.get_total()).dropna(1)
 
     def get_column_dispersion_params(self, col: str) -> pd.DataFrame:
+        """
+            returns the description plus mode and median of a specified column in the dataframe
+            Parameters
+            ----------
+            col:
+                Type: str
+
+            Returns
+            -------
+            None
+        """
         return self.df.describe().append(self.get_mode()).append(self.get_median()).dropna(1)[col]
 
     def get_total(self):
+        """
+            returns the total of each column of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         total = self.df.sum()
         total.name = 'Total'
         return total
 
     def get_mode(self):
+        """
+            returns the mode of each column of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         mode = self.df.mode()
         actual_mode = mode.iloc[0, :]
         actual_mode.name = 'Mode'
         return actual_mode
 
     def get_median(self):
+        """
+            returns the median of each column of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         median = self.df.median()
         median.name = 'Median'
         return median
 
     def get_column_description(self, column_name: str):
+        """
+            returns the description of a column in the dataframe
+            Parameters
+            ----------
+            column_name:
+                Type: str
+
+            Returns
+            -------
+            None
+        """
         try:
             return self.df[column_name].describe()
         except:
             print("Failed to get decription of the column")
 
     def get_mean(self):
+        """
+            returns the mean of each column of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         return self.df.mean()
 
     def get_column_mean(self, column_name: str):
+        """
+            returns the mean of the specified column in the dataframe
+            Parameters
+            ----------
+            column_name:
+                Type: str
+
+            Returns
+            -------
+            None
+        """
         try:
             return self.df[column_name].mean()
         except:
             print("Failed to get decription of the column")
 
     def get_standard_deviation(self):
+        """
+            returns the standard deviation of each column of the dataframe
+            Parameters
+            ----------
+            None
+
+            Returns
+            -------
+            None
+        """
         return self.df.std()
 
     def get_column_standard_deviation(self, column_name: str):
+        """
+            returns the standard deviation of the specified column in the dataframe
+            Parameters
+            ----------
+            column_name:
+                Type: str
+
+            Returns
+            -------
+            None
+        """
         try:
             return self.df[column_name].std()
         except:

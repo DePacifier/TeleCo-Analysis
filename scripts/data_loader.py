@@ -4,7 +4,20 @@ missing_values = ["n/a", "na", 'none', "-", "--", None, '?']
 
 
 def load_df_from_csv(filename: str, na_values: list = []) -> pd.DataFrame:
-    """A simple function which tries to load a dataframe from a specified .csv filename"""
+    """
+        A simple function which tries to load a dataframe from a specified .csv filename returning the loaded DataFrame
+        Parameters
+        ----------
+        filename:
+            Type: str
+        na_values:
+            Type: list
+            Default value = []
+
+        Returns
+        -------
+        pd.DataFrame
+    """
     try:
         na_values.extend(missing_values)
         df = pd.read_csv(filename, na_values=na_values)
@@ -16,7 +29,20 @@ def load_df_from_csv(filename: str, na_values: list = []) -> pd.DataFrame:
 
 
 def load_df_from_excel(filename: str, na_values: list = []) -> pd.DataFrame:
-    """A simple function which tries to load a dataframe from a specified .xslx filename"""
+    """
+       A simple function which tries to load a dataframe from a specified .xslx filename returning the loaded DataFrame
+        Parameters
+        ----------
+        filename:
+            Type: str
+        na_values:
+            Type: list
+            Default value = []
+
+        Returns
+        -------
+        pd.DataFrame
+    """
     try:
         na_values.extend(missing_values)
         df = pd.read_excel(
@@ -29,6 +55,17 @@ def load_df_from_excel(filename: str, na_values: list = []) -> pd.DataFrame:
 
 
 def optimize_df(dataframe: pd.DataFrame) -> pd.DataFrame:
+    """
+       A simple function which optimizes the data types of the dataframe and returns it
+        Parameters
+        ----------
+        dataframe:
+            Type: pd.DataFrame
+
+        Returns
+        -------
+        pd.DataFrame
+    """
     data_types = dataframe.dtypes
     optimizable = ['float64', 'int64']
     for col in data_types.index:

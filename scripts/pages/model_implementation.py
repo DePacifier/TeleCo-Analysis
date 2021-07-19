@@ -38,6 +38,6 @@ def app():
                      total_retransmission, average_delay, total_throughput]
             val = model.predict([array])
             satisfaction = [i[0] for i in val][0]
-            st.write(f'The predict satisfaction score of the user will be: {satisfaction}')
+            st.write('The predicted satisfaction score of the user is: {:.3f}'.format(satisfaction))
         except:
             print('Need more inputs')

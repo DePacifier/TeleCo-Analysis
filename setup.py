@@ -9,6 +9,7 @@ with open('README.md') as readme_file:
 
 with open('requirements.txt') as requirement_file:
     requirements_list = requirement_file.readlines()
+    requirements_list = [lib.replace('\n', '') for lib in requirements_list]
 
 requirements = requirements_list
 
@@ -16,7 +17,7 @@ test_requirements = []
 
 setup(
     author="Milky Bekele",
-    email="milkybekele@gmail.com",
+    author_email="milkybekele@gmail.com",
     python_requires='>=3.8',
     classifiers=[
         'Development Status :: 4 - Beta-Release',

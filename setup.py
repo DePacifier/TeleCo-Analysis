@@ -7,24 +7,25 @@ from setuptools import setup, find_packages
 with open('README.md') as readme_file:
     readme = readme_file.read()
 
-requirements = ['pandas>=1.1.0', 'numpy>=1.19.0', ]
+with open('requirements.txt') as requirement_file:
+    requirements_list = requirement_file.readlines()
 
-test_requirements = ['pytest>=3', ]
+requirements = requirements_list
+
+test_requirements = []
 
 setup(
-    author="10 Academy",
-    email="train@10academy.org",
-    python_requires='>=3.6',
+    author="Milky Bekele",
+    email="milkybekele@gmail.com",
+    python_requires='>=3.8',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 4 - Beta-Release',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
     ],
-    description="A Repository structure for all your project",
+    description="10 Academy on Training Project User Analytics in the Telecommunication Industry.",
     install_requires=requirements,
     long_description=readme,
     include_package_data=True,
@@ -33,7 +34,7 @@ setup(
     packages=find_packages(include=['scripts', 'scripts.*']),
     test_suite='tests',
     tests_require=test_requirements,
-    url='https://github.com/10xac/PythonPackageStructure',
-    version='0.1.0',
+    url='https://github.com/DePacifier/TeleCo-Analysis',
+    version='1.0.0',
     zip_safe=False,
 )

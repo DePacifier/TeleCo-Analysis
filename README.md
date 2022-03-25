@@ -73,7 +73,7 @@ The repository has a number of files including python scripts, jupyter notebooks
 
 ## Installation guide
 ```
-git clone https://github.com/zelalemgetahun9374/TellCo-Data-Analysis
+git clone https://github.com/DePacifier/TeleCo-Analysis.git
 cd TellCo-Analysis
 pip install -r requirements.txt
 ```

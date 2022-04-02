@@ -3,6 +3,9 @@
 ## Check Dashboard:
 👉 https://tellcoanalysis.herokuapp.com/
 
+## Check Assessment Presentation:
+👉 https://docs.google.com/presentation/d/1Opcogw0O2Rc155wQduEI-9VOYQvsopqz/edit?usp=sharing&ouid=101895458432385123273&rtpof=true&sd=true
+
 **Table of Contents**
 
 - [TellCo-Data-Analysis](#TellCo-Data-Analysis)
